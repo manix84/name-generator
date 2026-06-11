@@ -2,13 +2,15 @@
   min-height: 100vh;
   min-height: 100svh;
   box-sizing: border-box;
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: max(1.5rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
-    max(1.75rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    max(4.25rem, calc(env(safe-area-inset-bottom) + 3.25rem))
+    max(1rem, env(safe-area-inset-left));
   gap: clamp(1.2rem, 4vh, 2.25rem);
   text-align: center;
 }
@@ -19,6 +21,7 @@
   font-weight: 750;
   letter-spacing: 0.12em;
   line-height: 1.4;
+  margin: 0;
   max-width: 100%;
   text-transform: uppercase;
 }
@@ -102,6 +105,48 @@
   outline-offset: 0.35rem;
 }
 
+.footer {
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  left: 1rem;
+  position: absolute;
+  right: 1rem;
+}
+
+.profileLink {
+  align-items: center;
+  color: #667085;
+  display: inline-flex;
+  font-size: 0.86rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1.4;
+  min-height: 2.75rem;
+  opacity: 0.1;
+  padding: 0 0.45rem;
+  text-decoration: none;
+  transition:
+    color 160ms ease,
+    opacity 160ms ease;
+}
+
+.profileLink:hover {
+  color: #1c3553;
+  opacity: 1;
+}
+
+.profileLink:focus-visible {
+  border-radius: 0.25rem;
+  opacity: 1;
+  outline: 0.18rem solid #f2b84b;
+  outline-offset: 0.25rem;
+}
+
+@media (prefers-contrast: more) {
+  .profileLink {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 780px) {
   .container {
     gap: 1.85rem;
@@ -163,5 +208,10 @@
 
   .nameContainer {
     min-height: 5.4rem;
+  }
+
+  .footer {
+    margin-top: auto;
+    position: static;
   }
 }

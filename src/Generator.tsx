@@ -33,8 +33,10 @@ function Generator() {
   };
 
   return (
-    <div className={st.container}>
-      <header className={st.header}>Name Generator</header>
+    <main aria-labelledby="page-title" className={st.container}>
+      <h1 className={st.header} id="page-title">
+        Name Generator
+      </h1>
       <div className={st.nameContainer}>
         <LazyMotion features={loadFeatures}>
           <AnimatePresence>
@@ -57,7 +59,8 @@ function Generator() {
                 ease: "easeOut",
                 duration: generationSpeedMS / 1000,
               }}
-              className={st.abjective}>
+              className={st.abjective}
+            >
               {randomName.abjective}
             </m.span>
           </AnimatePresence>
@@ -83,16 +86,32 @@ function Generator() {
                 ease: "easeOut",
                 duration: generationSpeedMS / 1000,
               }}
-              className={st.animal}>
+              className={st.animal}
+            >
               {randomName.animal}
             </m.span>
           </AnimatePresence>
         </LazyMotion>
       </div>
-      <button className={st.randomiseButton} onClick={randomiseName}>
+      <button
+        className={st.randomiseButton}
+        onClick={randomiseName}
+        type="button"
+      >
         Randomise
       </button>
-    </div>
+      <footer aria-label="Developer" className={st.footer}>
+        <a
+          aria-label="Developer GitHub profile"
+          className={st.profileLink}
+          href="https://github.com/manix84"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Developer
+        </a>
+      </footer>
+    </main>
   );
 }
 
