@@ -1,83 +1,131 @@
-body {
-  background-color: #a278db;
+.container {
+  min-height: 100vh;
+  min-height: 100svh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  gap: 2.25rem;
+  text-align: center;
+}
+
+.header {
+  color: #667085;
+  font-size: 0.95rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.nameContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.12em 0.24em;
+  width: min(100%, 68rem);
+  min-height: 12.5rem;
+  padding: 0 0.25rem;
+  font-family:
+    "Sora",
+    "Manrope",
+    "Avenir Next",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: 6rem;
+  font-weight: 850;
+  line-height: 0.96;
+}
+
+.abjective,
+.animal {
+  display: inline-block;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.abjective {
+  color: #2463d6;
+}
+
+.animal {
+  color: #e65f35;
+}
+
+.randomiseButton {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: #1c3553;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 1rem 1.45rem;
+  box-shadow:
+    0 0.7rem 0 #10243a,
+    0 1.25rem 2rem rgba(28, 53, 83, 0.18);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.randomiseButton:hover {
+  background: #24476f;
+  transform: translateY(-0.12rem);
+  box-shadow:
+    0 0.82rem 0 #10243a,
+    0 1.45rem 2.2rem rgba(28, 53, 83, 0.2);
+}
+
+.randomiseButton:active {
+  transform: translateY(0.38rem);
+  box-shadow:
+    0 0.32rem 0 #10243a,
+    0 0.9rem 1.4rem rgba(28, 53, 83, 0.16);
+}
+
+.randomiseButton:focus-visible {
+  outline: 0.2rem solid #f2b84b;
+  outline-offset: 0.35rem;
+}
+
+@media (max-width: 780px) {
   .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    gap: 5vh;
-    .header {
-      font-family: monospace !important;
-      font-size: 3em;
-    }
-    .nameContainer {
-      position: relative;
-      display: flex;
-      width: 100%;
-      flex-direction: row;
-      justify-content: center;
-      gap: 0.5em;
-      font-family: "Comic Sans MS", "Comic Sans", cursive;
-      font-size: 7.5em;
-      font-weight: 700;
-      line-height: 1em;
-      .abjective {
-        color: #33fba7;
-      }
-      .animal {
-        color: #fba733;
-      }
-    }
-    .randomiseButton {
-      /* This shiny button comes from:  */
-      display: inline-block;
-      position: relative;
-      background-color: #aaa;
-      background-image: linear-gradient(
-        hsla(0, 0%, 100%, 0.6),
-        hsla(0, 0%, 100%, 0) 50%,
-        hsla(0, 0%, 0%, 0.3) 50%,
-        hsla(0, 0%, 100%, 0.2)
-      );
-      font-size: 22px;
-      font-family: sans-serif;
-      font-weight: bold;
-      color: white;
-      padding: 20px 40px;
-      text-shadow: 0 0 15px hsla(0, 0%, 100%, 1), 0 2px 4px hsla(0, 0%, 0%, 0.7);
-      border: none;
-      border-radius: 50px;
-      margin: 10px;
-      box-shadow: inset 0 -5px 20px hsla(0, 0%, 0%, 0.4),
-        inset 0 5px 20px hsla(0, 0%, 100%, 0.4),
-        -8px 8px 5px hsla(0, 0%, 0%, 0.15), 5px 18px 10px hsla(0, 0%, 0%, 0.2);
-      cursor: pointer;
-      transition: transform 0.1s, box-shadow 0.1s;
-      &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        left: 20px;
-        right: 20px;
-        top: 5px;
-        height: 30px;
-        border-radius: 15px;
-        background: linear-gradient(
-          hsla(0, 0%, 100%, 0.8),
-          hsla(0, 0%, 100%, 0)
-        );
-      }
+    padding: 3rem 1.15rem;
+    gap: 1.85rem;
+  }
 
-      background-color: #e21;
+  .nameContainer {
+    min-height: 10rem;
+    font-size: 4.25rem;
+  }
+}
 
-      &:hover {
-        transform: scale(1.05);
-        box-shadow: inset 0 -5px 20px hsla(0, 0%, 0%, 0.4),
-          inset 0 5px 20px hsla(0, 0%, 100%, 0.4),
-          -12px 12px 5px hsla(0, 0%, 0%, 0.15),
-          10px 25px 10px hsla(0, 0%, 0%, 0.2);
-      }
-    }
+@media (max-width: 460px) {
+  .container {
+    gap: 1.55rem;
+  }
+
+  .header {
+    font-size: 0.82rem;
+  }
+
+  .nameContainer {
+    min-height: 8.5rem;
+    font-size: 3rem;
+  }
+
+  .randomiseButton {
+    width: min(100%, 16rem);
   }
 }
