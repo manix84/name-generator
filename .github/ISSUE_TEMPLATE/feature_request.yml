@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest an improvement for Name Generator.
+title: "Feature: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to change?
+      description: Describe the improvement and why it would help.
+    validations:
+      required: true
+  - type: textarea
+    id: approach
+    attributes:
+      label: Possible approach
+      description: Optional notes on implementation, design, or tradeoffs.
+  - type: textarea
+    id: context
+    attributes:
+      label: Extra context
+      description: Add screenshots, examples, or links if useful.
