@@ -4,6 +4,7 @@ import st from "./Generator.module.scss";
 import resources, { Resource } from "./resources";
 
 const generationSpeedMS = 150;
+const fontFitDelayMS = generationSpeedMS + 40;
 const themeModes = ["auto", "light", "dark"] as const;
 type ThemeMode = (typeof themeModes)[number];
 
@@ -18,6 +19,11 @@ function Generator() {
     abjective: abjectives[Math.floor(Math.random() * abjectives.length)],
     animal: animals[Math.floor(Math.random() * animals.length)],
   });
+  const { containerRef: nameContainerRef, measureRef: nameMeasureRef } =
+    useDynamicSingleLineText(
+      [randomName.abjective, randomName.animal],
+      fontFitDelayMS
+    );
 
   React.useEffect(() => {
     if (themeMode === "auto") {
@@ -69,61 +75,67 @@ function Generator() {
       <h1 className={st.header} id="page-title">
         Name Generator
       </h1>
-      <div className={st.nameContainer}>
-        <LazyMotion features={loadFeatures}>
-          <AnimatePresence>
-            <m.span
-              key={`word_${randomName.abjective}`}
-              exit={{
-                y: 50,
-                opacity: 0,
-                position: "absolute",
-                pointerEvents: "none",
-              }}
-              initial={{
-                y: -50,
-                opacity: 0,
-                position: "absolute",
-                pointerEvents: "none",
-              }}
-              animate={{ y: 0, opacity: 1, position: "static" }}
-              transition={{
-                ease: "easeOut",
-                duration: generationSpeedMS / 1000,
-              }}
-              className={st.abjective}
-            >
-              {randomName.abjective}
-            </m.span>
-          </AnimatePresence>
-        </LazyMotion>
-        <LazyMotion features={loadFeatures}>
-          <AnimatePresence>
-            <m.span
-              key={`word_${randomName.animal}`}
-              exit={{
-                y: -50,
-                opacity: 0,
-                position: "absolute",
-                pointerEvents: "none",
-              }}
-              initial={{
-                y: 50,
-                opacity: 0,
-                position: "absolute",
-                pointerEvents: "none",
-              }}
-              animate={{ y: 0, opacity: 1, position: "static" }}
-              transition={{
-                ease: "easeOut",
-                duration: generationSpeedMS / 1000,
-              }}
-              className={st.animal}
-            >
-              {randomName.animal}
-            </m.span>
-          </AnimatePresence>
-        </LazyMotion>
+      <div className={st.nameContainer} ref={nameContainerRef}>
+        <div className={st.nameRow}>
+          <LazyMotion features={loadFeatures}>
+            <AnimatePresence>
+              <m.span
+                key={`word_${randomName.abjective}`}
+                exit={{
+                  y: 50,
+                  opacity: 0,
+                  position: "absolute",
+                  pointerEvents: "none",
+                }}
+                initial={{
+                  y: -50,
+                  opacity: 0,
+                  position: "absolute",
+                  pointerEvents: "none",
+                }}
+                animate={{ y: 0, opacity: 1, position: "static" }}
+                transition={{
+                  ease: "easeOut",
+                  duration: generationSpeedMS / 1000,
+                }}
+                className={st.abjective}
+              >
+                {randomName.abjective}
+              </m.span>
+            </AnimatePresence>
+          </LazyMotion>
+          <LazyMotion features={loadFeatures}>
+            <AnimatePresence>
+              <m.span
+                key={`word_${randomName.animal}`}
+                exit={{
+                  y: -50,
+                  opacity: 0,
+                  position: "absolute",
+                  pointerEvents: "none",
+                }}
+                initial={{
+                  y: 50,
+                  opacity: 0,
+                  position: "absolute",
+                  pointerEvents: "none",
+                }}
+                animate={{ y: 0, opacity: 1, position: "static" }}
+                transition={{
+                  ease: "easeOut",
+                  duration: generationSpeedMS / 1000,
+                }}
+                className={st.animal}
+              >
+                {randomName.animal}
+              </m.span>
+            </AnimatePresence>
+          </LazyMotion>
+        </div>
+        <div aria-hidden="true" className={st.measureRow} ref={nameMeasureRef}>
+          <span className={st.abjective}>{randomName.abjective}</span>
+          <span className={st.animal}>{randomName.animal}</span>
+        </div>
       </div>
       <button
         className={st.randomiseButton}
@@ -181,4 +193,92 @@ const themeSymbolByMode: Record<ThemeMode, string> = {
   auto: "◐",
   light: "☼",
   dark: "☾",
+};
+
+const useDynamicSingleLineText = (
+  dependencies: React.DependencyList,
+  delayedFitMs = 0
+) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const measureRef = React.useRef<HTMLDivElement>(null);
+
+  React.useLayoutEffect(() => {
+    const container = containerRef.current;
+    const measure = measureRef.current;
+
+    if (!container || !measure) {
+      return undefined;
+    }
+
+    let animationFrame = 0;
+    let isActive = true;
+    const scheduleFit = () => {
+      if (!isActive) {
+        return;
+      }
+
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = window.requestAnimationFrame(() => {
+        if (!isActive) {
+          return;
+        }
+
+        fitSingleLineText(container, measure);
+      });
+    };
+
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(scheduleFit);
+
+    resizeObserver?.observe(container);
+    window.addEventListener("resize", scheduleFit);
+    scheduleFit();
+
+    const delayedFit = window.setTimeout(scheduleFit, delayedFitMs);
+    if ("fonts" in document) {
+      void document.fonts.ready.then(scheduleFit);
+    }
+
+    return () => {
+      isActive = false;
+      window.cancelAnimationFrame(animationFrame);
+      window.clearTimeout(delayedFit);
+      window.removeEventListener("resize", scheduleFit);
+      resizeObserver?.disconnect();
+    };
+  }, dependencies);
+
+  return { containerRef, measureRef };
+};
+
+const fitSingleLineText = (container: HTMLElement, measure: HTMLElement) => {
+  container.style.removeProperty("--name-font-size");
+
+  const availableWidth = getAvailableInlineWidth(container);
+  const measuredWidth = measure.getBoundingClientRect().width;
+
+  if (availableWidth <= 0 || measuredWidth <= availableWidth) {
+    return;
+  }
+
+  const styles = window.getComputedStyle(container);
+  const maxFontSize = Number.parseFloat(styles.fontSize);
+  const minFontSize =
+    Number.parseFloat(styles.getPropertyValue("--name-min-font-size")) || 20;
+  const fittedFontSize = Math.max(
+    minFontSize,
+    maxFontSize * (availableWidth / measuredWidth)
+  );
+
+  container.style.setProperty("--name-font-size", `${fittedFontSize}px`);
+};
+
+const getAvailableInlineWidth = (element: HTMLElement) => {
+  const styles = window.getComputedStyle(element);
+  const paddingLeft = Number.parseFloat(styles.paddingLeft) || 0;
+  const paddingRight = Number.parseFloat(styles.paddingRight) || 0;
+
+  return element.getBoundingClientRect().width - paddingLeft - paddingRight;
 };

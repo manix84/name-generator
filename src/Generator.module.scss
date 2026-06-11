@@ -68,12 +68,11 @@
 }
 
 .nameContainer {
+  --name-min-font-size: 1.25rem;
+
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.12em 0.24em;
+  box-sizing: border-box;
+  max-width: 100%;
   width: min(100%, 68rem);
   min-height: clamp(7.5rem, 22vh, 12.5rem);
   padding: 0 0.25rem;
@@ -83,16 +82,42 @@
     system-ui,
     -apple-system,
     sans-serif;
-  font-size: clamp(2.15rem, 11.8vw, 6rem);
+  font-size: var(--name-font-size, clamp(2.15rem, 11.8vw, 6rem));
   font-weight: 850;
   line-height: 0.96;
+}
+
+.nameRow,
+.measureRow {
+  align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.24em;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.nameRow {
+  min-height: inherit;
+  min-width: 0;
+  position: relative;
+  width: 100%;
+}
+
+.measureRow {
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+  width: max-content;
 }
 
 .abjective,
 .animal {
   display: inline-block;
-  overflow-wrap: anywhere;
-  text-wrap: balance;
+  min-width: 0;
+  overflow-wrap: normal;
 }
 
 .abjective {
@@ -234,6 +259,8 @@
   }
 
   .nameContainer {
+    --name-min-font-size: 1.15rem;
+
     font-size: clamp(1.82rem, 11.2vw, 2.15rem);
     min-height: 5.6rem;
   }
