@@ -2,7 +2,9 @@ const CACHE_VERSION = "name-generator-v1";
 const APP_SHELL = [
   "./",
   "manifest.json",
-  "favicon.ico",
+  "favicon-32.png",
+  "apple-touch-icon.png",
+  "cool_marmot.jpg",
   "logo192.png",
   "logo512.png",
   "robots.txt",

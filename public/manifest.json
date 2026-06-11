@@ -7,28 +7,34 @@
   "scope": ".",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180",
+      "purpose": "any"
     },
     {
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ],
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui", "browser"],
   "orientation": "portrait",
   "categories": ["productivity", "utilities"],
-  "theme_color": "#1c3553",
+  "theme_color": "#fefbf1",
   "background_color": "#fefbf1",
   "shortcuts": [
     {

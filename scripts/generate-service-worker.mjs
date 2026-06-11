@@ -7,6 +7,8 @@ const staticExtensions = new Set([
   ".css",
   ".html",
   ".ico",
+  ".jpeg",
+  ".jpg",
   ".js",
   ".json",
   ".png",

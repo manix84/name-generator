@@ -6,6 +6,10 @@ import resources, { Resource } from "./resources";
 const generationSpeedMS = 150;
 const fontFitDelayMS = generationSpeedMS + 40;
 const themeModes = ["auto", "light", "dark"] as const;
+const pwaBackgroundByTheme = {
+  light: "#fefbf1",
+  dark: "#101822",
+} as const;
 type ThemeMode = (typeof themeModes)[number];
 
 const { animals, abjectives } = resources;
@@ -29,11 +33,31 @@ function Generator() {
     if (themeMode === "auto") {
       document.documentElement.removeAttribute("data-theme");
       storeThemePreference(null);
-      return;
+    } else {
+      document.documentElement.dataset.theme = themeMode;
+      storeThemePreference(themeMode);
     }
 
-    document.documentElement.dataset.theme = themeMode;
-    storeThemePreference(themeMode);
+    const syncPwaThemeColor = () => {
+      setPwaThemeColor(getResolvedTheme(themeMode));
+    };
+
+    syncPwaThemeColor();
+
+    if (themeMode !== "auto") {
+      return undefined;
+    }
+
+    if (typeof window.matchMedia !== "function") {
+      return undefined;
+    }
+
+    const darkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    darkScheme.addEventListener("change", syncPwaThemeColor);
+
+    return () => {
+      darkScheme.removeEventListener("change", syncPwaThemeColor);
+    };
   }, [themeMode]);
 
   const randomiseName = () => {
@@ -187,6 +211,23 @@ const storeThemePreference = (themeMode: Exclude<ThemeMode, "auto"> | null) => {
   } catch {
     // Theme preference is an enhancement; the app should keep working without storage.
   }
+};
+
+const getResolvedTheme = (themeMode: ThemeMode): Exclude<ThemeMode, "auto"> => {
+  if (themeMode !== "auto") {
+    return themeMode;
+  }
+
+  return typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const setPwaThemeColor = (theme: Exclude<ThemeMode, "auto">) => {
+  document
+    .querySelector<HTMLMetaElement>("#theme-color-meta")
+    ?.setAttribute("content", pwaBackgroundByTheme[theme]);
 };
 
 const themeSymbolByMode: Record<ThemeMode, string> = {
