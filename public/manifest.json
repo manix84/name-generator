@@ -2,23 +2,23 @@
   "short_name": "Name Generator",
   "name": "Name Generator",
   "description": "Generate casual two-word names for teams, projects, and ideas.",
-  "id": "/",
-  "start_url": "/",
-  "scope": "/",
+  "id": ".",
+  "start_url": ".",
+  "scope": ".",
   "icons": [
     {
-      "src": "/favicon.ico",
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "/logo192.png",
+      "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "/logo512.png",
+      "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
@@ -35,10 +35,10 @@
       "name": "Generate a name",
       "short_name": "Generate",
       "description": "Open Name Generator and randomise a team name.",
-      "url": "/",
+      "url": ".",
       "icons": [
         {
-          "src": "/logo192.png",
+          "src": "logo192.png",
           "sizes": "192x192",
           "type": "image/png"
         }

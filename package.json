@@ -1,7 +1,7 @@
 {
   "name": "name-generator",
   "version": "0.1.0",
-  "homepage": "/",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "classnames": "^2.3.1",

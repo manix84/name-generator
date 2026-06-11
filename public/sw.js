@@ -1,12 +1,13 @@
 const CACHE_VERSION = "name-generator-v1";
 const APP_SHELL = [
-  "/",
-  "/manifest.json",
-  "/favicon.ico",
-  "/logo192.png",
-  "/logo512.png",
-  "/robots.txt",
+  "./",
+  "manifest.json",
+  "favicon.ico",
+  "logo192.png",
+  "logo512.png",
+  "robots.txt",
 ];
+const APP_ROOT = new URL("./", self.location.href);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -50,11 +51,11 @@ self.addEventListener("fetch", (event) => {
       fetch(request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_VERSION).then((cache) => cache.put("/", copy));
+          caches.open(CACHE_VERSION).then((cache) => cache.put(APP_ROOT, copy));
           return response;
         })
         .catch(() =>
-          caches.match("/").then((response) => response || caches.match(request))
+          caches.match(APP_ROOT).then((response) => response || caches.match(request))
         )
     );
     return;
