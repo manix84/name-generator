@@ -11,8 +11,7 @@ test("renders the generator controls", () => {
     screen.getByRole("heading", { level: 1, name: /name generator/i })
   ).toBeInTheDocument();
   expect(screen.getByRole("button", { name: /randomise/i })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /developer/i })).toHaveAttribute(
-    "href",
-    "https://github.com/manix84"
-  );
+  expect(
+    screen.getByRole("link", { name: /copyright 2022 manix84/i })
+  ).toHaveAttribute("href", "https://github.com/manix84");
 });

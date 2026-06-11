@@ -100,15 +100,15 @@ function Generator() {
       >
         Randomise
       </button>
-      <footer aria-label="Developer" className={st.footer}>
+      <footer aria-label="Copyright" className={st.footer}>
         <a
-          aria-label="Developer GitHub profile"
+          aria-label="Copyright 2022 manix84 GitHub profile"
           className={st.profileLink}
           href="https://github.com/manix84"
           rel="noreferrer"
           target="_blank"
         >
-          Developer
+          © 2022 manix84
         </a>
       </footer>
     </main>
