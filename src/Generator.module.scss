@@ -16,7 +16,7 @@
 }
 
 .header {
-  color: #667085;
+  color: var(--muted-text);
   font-size: 0.95rem;
   font-weight: 750;
   letter-spacing: 0.12em;
@@ -24,6 +24,47 @@
   margin: 0;
   max-width: 100%;
   text-transform: uppercase;
+}
+
+.themeButton {
+  align-items: center;
+  appearance: none;
+  background: var(--subtle-control-bg);
+  border: 1px solid var(--subtle-control-border);
+  border-radius: 999px;
+  color: var(--muted-text);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  height: 2.35rem;
+  justify-content: center;
+  line-height: 1;
+  opacity: 0.72;
+  position: absolute;
+  right: max(1rem, env(safe-area-inset-right));
+  top: max(1rem, env(safe-area-inset-top));
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+  width: 2.35rem;
+}
+
+.themeButton:hover {
+  background: var(--subtle-control-bg-hover);
+  color: var(--page-text);
+  opacity: 1;
+  transform: translateY(-0.06rem);
+}
+
+.themeButton:focus-visible {
+  opacity: 1;
+  outline: 0.18rem solid var(--focus-ring);
+  outline-offset: 0.25rem;
 }
 
 .nameContainer {
@@ -55,20 +96,20 @@
 }
 
 .abjective {
-  color: #2463d6;
+  color: var(--word-primary);
 }
 
 .animal {
-  color: #e65f35;
+  color: var(--word-secondary);
 }
 
 .randomiseButton {
   appearance: none;
   border: 0;
   border-radius: 999px;
-  background: #1c3553;
+  background: var(--button-bg);
   box-sizing: border-box;
-  color: #ffffff;
+  color: var(--button-text);
   cursor: pointer;
   font: inherit;
   font-size: clamp(1rem, 4vw, 1.08rem);
@@ -77,8 +118,8 @@
   max-width: 100%;
   padding: 1rem 1.45rem;
   box-shadow:
-    0 0.7rem 0 #10243a,
-    0 1.25rem 2rem rgba(28, 53, 83, 0.18);
+    0 0.7rem 0 var(--button-shadow),
+    0 1.25rem 2rem var(--button-shadow-soft);
   transition:
     background-color 160ms ease,
     box-shadow 160ms ease,
@@ -86,22 +127,22 @@
 }
 
 .randomiseButton:hover {
-  background: #24476f;
+  background: var(--button-bg-hover);
   transform: translateY(-0.12rem);
   box-shadow:
-    0 0.82rem 0 #10243a,
-    0 1.45rem 2.2rem rgba(28, 53, 83, 0.2);
+    0 0.82rem 0 var(--button-shadow),
+    0 1.45rem 2.2rem var(--button-shadow-soft-hover);
 }
 
 .randomiseButton:active {
   transform: translateY(0.38rem);
   box-shadow:
-    0 0.32rem 0 #10243a,
-    0 0.9rem 1.4rem rgba(28, 53, 83, 0.16);
+    0 0.32rem 0 var(--button-shadow),
+    0 0.9rem 1.4rem var(--button-shadow-soft-active);
 }
 
 .randomiseButton:focus-visible {
-  outline: 0.2rem solid #f2b84b;
+  outline: 0.2rem solid var(--focus-ring);
   outline-offset: 0.35rem;
 }
 
@@ -114,7 +155,7 @@
 
 .profileLink {
   align-items: center;
-  color: #667085;
+  color: var(--muted-text);
   display: inline-flex;
   font-size: 0.86rem;
   font-weight: 700;
@@ -130,19 +171,23 @@
 }
 
 .profileLink:hover {
-  color: #1c3553;
+  color: var(--page-text);
   opacity: 1;
 }
 
 .profileLink:focus-visible {
   border-radius: 0.25rem;
   opacity: 1;
-  outline: 0.18rem solid #f2b84b;
+  outline: 0.18rem solid var(--focus-ring);
   outline-offset: 0.25rem;
 }
 
 @media (prefers-contrast: more) {
   .profileLink {
+    opacity: 1;
+  }
+
+  .themeButton {
     opacity: 1;
   }
 }
